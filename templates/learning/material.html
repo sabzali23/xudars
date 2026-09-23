@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Материал: {{ topic.title }}{% endblock %}
+{% block content %}
+{% include "includes/back_to_course.html" %}
+{% include "includes/cycle_steps.html" with step=2 %}
+
+<div class="page-head">
+  <p class="eyebrow">Материал{% if progress.entry_score is not None %} · входной тест: {{ progress.entry_score }}%{% endif %}</p>
+  <h1>{{ topic.title }}</h1>
+</div>
+
+<details class="card guide" open>
+  <summary>
+    <span class="pill pill-amber">Для родителя</span>
+    <span class="guide-summary-title">Как провести занятие</span>
+    <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+  </summary>
+  <div class="guide-body prose">
+    {{ material.parent_guide_html|safe }}
+  </div>
+</details>
+
+{% if material.video_url %}
+<div class="card video-card">
+  <span class="icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+  <p class="small muted">Видео расходует интернет-трафик. При слабом соединении достаточно прочитать конспект ниже.</p>
+  <a class="button button-secondary" href="{{ material.video_url }}" target="_blank" rel="noopener">Смотреть видео</a>
+</div>
+{% endif %}
+
+<article class="card prose">
+  <p class="eyebrow">Конспект — читайте вместе с ребёнком</p>
+  {{ material.summary_html|safe }}
+</article>
+
+{% if progress.stage == "final_test" %}
+<div class="card next-bar">
+  <p class="hint">Переходите к итоговому тесту, когда ребёнок решает проверочные примеры из руководства без подсказок.</p>
+  <a class="button" href="{% url 'topic_test' topic.slug 'final' %}">Перейти к итоговому тесту</a>
+</div>
+{% elif progress.stage == "done" %}
+<a class="button" href="{% url 'topic_next' topic.slug %}">Что дальше</a>
+{% endif %}
+{% endblock %}

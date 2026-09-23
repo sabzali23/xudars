@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}{{ kind_label }}: {{ topic.title }}{% endblock %}
+{% block content %}
+{% include "includes/back_to_course.html" %}
+{% if kind == "entry" %}{% include "includes/cycle_steps.html" with step=1 %}{% else %}{% include "includes/cycle_steps.html" with step=3 %}{% endif %}
+
+<div class="page-head">
+  <p class="eyebrow">{{ topic.title }} · {{ kind_label }}</p>
+  <div class="test-progress">
+    <p class="counter">Задание {{ number }} из {{ total }}</p>
+    <div class="bar"><span style="width: {% widthratio done total 100 %}%"></span></div>
+  </div>
+</div>
+
+{% if number == 1 %}
+<p class="hint">
+  {% if kind == "entry" %}Для родителя: не подсказывайте. Входной тест показывает, что ребёнок уже знает, — ошибки здесь нормальны.
+  {% else %}Для родителя: пусть ребёнок решает сам, без подсказок, — иначе результат «стало» будет неточным.{% endif %}
+</p>
+{% endif %}
+
+<form method="post" class="card question-card">
+  {% csrf_token %}
+  <input type="hidden" name="question_id" value="{{ question.pk }}">
+  <fieldset>
+    <legend class="question-text">{{ question.text|linebreaksbr }}</legend>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <div class="options">
+      {% for index, option in options %}
+      <label class="option">
+        <input type="radio" name="answer" value="{{ index }}" required>
+        <span>{{ option }}</span>
+      </label>
+      {% endfor %}
+    </div>
+  </fieldset>
+  <button type="submit" class="button">Ответить</button>
+</form>
+<p class="small muted">Ответ сохраняется сразу. Если связь прервётся, тест продолжится с этого же задания.</p>
+{% endblock %}

@@ -1,0 +1,83 @@
+{
+  "title": "Числа от 1 до 10",
+  "order": 2,
+  "video_url": "",
+  "questions": {
+    "entry": [
+      {
+        "text": "Как по-английски «три»?",
+        "options": ["two", "three", "tree", "free"],
+        "correct": 1,
+        "explanation": "Три — three («фри»). Слово tree очень похоже, но означает «дерево»."
+      },
+      {
+        "text": "Какое число по-английски five?",
+        "options": ["4", "5", "6", "9"],
+        "correct": 1,
+        "explanation": "Five («файв») — это 5. Столько пальцев на одной руке."
+      },
+      {
+        "text": "Какое слово идёт сразу после six?",
+        "options": ["five", "seven", "eight", "nine"],
+        "correct": 1,
+        "explanation": "Считаем по порядку: five, six, seven. После six идёт seven («сэвэн») — 7."
+      },
+      {
+        "text": "Как по-английски «десять»?",
+        "options": ["ten", "tan", "teen", "two"],
+        "correct": 0,
+        "explanation": "Десять — ten («тэн»). Это последнее число, которое учим в этой теме."
+      },
+      {
+        "text": "Сколько будет one + two? Назови ответ по-английски.",
+        "options": ["two", "three", "four", "five"],
+        "correct": 1,
+        "explanation": "One — это 1, two — это 2. Вместе 3, а по-английски три — three."
+      }
+    ],
+    "final": [
+      {
+        "text": "Как по-английски «четыре»?",
+        "options": ["for", "four", "five", "fourteen"],
+        "correct": 1,
+        "explanation": "Четыре — four («фо»)."
+      },
+      {
+        "text": "Какое число по-английски eight?",
+        "options": ["3", "6", "8", "9"],
+        "correct": 2,
+        "explanation": "Eight («эйт») — это 8."
+      },
+      {
+        "text": "Какое слово идёт сразу после nine?",
+        "options": ["eight", "ten", "seven", "six"],
+        "correct": 1,
+        "explanation": "Считаем по порядку: eight, nine, ten. После nine идёт ten — 10."
+      },
+      {
+        "text": "Как по-английски «семь»?",
+        "options": ["six", "seven", "eleven", "nine"],
+        "correct": 1,
+        "explanation": "Семь — seven («сэвэн»)."
+      },
+      {
+        "text": "Сколько будет two + three? Назови ответ по-английски.",
+        "options": ["four", "five", "six", "seven"],
+        "correct": 1,
+        "explanation": "Two — это 2, three — это 3. Вместе 5, а по-английски пять — five."
+      },
+      {
+        "text": "Какое число пропущено: one, two, __, four?",
+        "options": ["five", "three", "six", "ten"],
+        "correct": 1,
+        "explanation": "Порядок такой: one, two, three, four. Пропущено three — 3."
+      },
+      {
+        "text": "Сколько пальцев на одной руке? Назови ответ по-английски.",
+        "options": ["four", "five", "six", "ten"],
+        "correct": 1,
+        "explanation": "На одной руке пять пальцев, а пять по-английски — five."
+      }
+    ]
+  }
+}

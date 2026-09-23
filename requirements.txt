@@ -1,0 +1,8 @@
+Django>=5.1,<5.3
+Markdown>=3.6,<4
+whitenoise>=6.7,<7
+
+# Нужны только на хостинге: боевой сервер, драйвер PostgreSQL и разбор DATABASE_URL.
+gunicorn>=23,<24
+psycopg[binary]>=3.2,<4
+dj-database-url>=2.2,<3

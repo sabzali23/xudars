@@ -1,0 +1,4 @@
+{% if form.non_field_errors %}<div class="error">{{ form.non_field_errors }}</div>{% endif %}
+{% for field in form %}
+<div class="field">{{ field.as_field_group }}</div>
+{% endfor %}

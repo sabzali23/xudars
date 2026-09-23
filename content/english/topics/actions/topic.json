@@ -1,0 +1,83 @@
+{
+  "title": "Что делают сейчас: is/are и окончание -ing",
+  "order": 4,
+  "video_url": "",
+  "questions": {
+    "entry": [
+      {
+        "text": "The children are ___ in the river. (flying, swimming)",
+        "options": ["flying", "swimming"],
+        "correct": 1,
+        "explanation": "В реке плавают: swimming («плавают»). Flying — «летают», так про реку не говорят."
+      },
+      {
+        "text": "Mirzo is ___ loudly. (singing, sitting)",
+        "options": ["singing", "sitting"],
+        "correct": 0,
+        "explanation": "Loudly — «громко». Громко можно петь: singing. Sitting — «сидит»."
+      },
+      {
+        "text": "The baby is ___ milk. (drawing, drinking)",
+        "options": ["drawing", "drinking"],
+        "correct": 1,
+        "explanation": "Milk — «молоко», его пьют: drinking. Drawing — «рисует»."
+      },
+      {
+        "text": "The cat is ___ with a ball. (playing, smiling)",
+        "options": ["playing", "smiling"],
+        "correct": 0,
+        "explanation": "With a ball — «с мячиком». С мячиком играют: playing. Smiling — «улыбается»."
+      },
+      {
+        "text": "Какое окончание добавляют к глаголу, когда действие происходит прямо сейчас?",
+        "options": ["-ing", "-ed", "-s", "-er"],
+        "correct": 0,
+        "explanation": "Действие сейчас — это is/are плюс глагол с окончанием -ing: is playing, are swimming."
+      }
+    ],
+    "final": [
+      {
+        "text": "The boy is ___ a picture. (drawing, drinking)",
+        "options": ["drawing", "drinking"],
+        "correct": 0,
+        "explanation": "A picture — «картинка», её рисуют: drawing."
+      },
+      {
+        "text": "The birds are ___ in the sky. (flying, swimming)",
+        "options": ["flying", "swimming"],
+        "correct": 0,
+        "explanation": "In the sky — «в небе». В небе летают: flying."
+      },
+      {
+        "text": "The girl is ___ on the chair. (sitting, singing)",
+        "options": ["sitting", "singing"],
+        "correct": 0,
+        "explanation": "On the chair — «на стуле». На стуле сидят: sitting."
+      },
+      {
+        "text": "Какое слово написано верно: swim плюс -ing?",
+        "options": ["swiming", "swimming", "swimeing", "swims"],
+        "correct": 1,
+        "explanation": "В коротких словах вроде swim и sit последняя буква удваивается: swimming, sitting."
+      },
+      {
+        "text": "Как правильно сказать «он играет прямо сейчас»?",
+        "options": ["He is play", "He is playing", "He playing", "He play now"],
+        "correct": 1,
+        "explanation": "Нужны обе части: is и глагол с -ing. Правильно — He is playing."
+      },
+      {
+        "text": "Какое слово подходит: The children are ___ football.",
+        "options": ["playing", "drinking", "sitting", "flying"],
+        "correct": 0,
+        "explanation": "В футбол играют: playing football."
+      },
+      {
+        "text": "Что поставить перед словом swimming: The children ___ swimming.",
+        "options": ["is", "are", "am", "be"],
+        "correct": 1,
+        "explanation": "Children — это много детей, поэтому are. Is ставят, когда речь про одного."
+      }
+    ]
+  }
+}

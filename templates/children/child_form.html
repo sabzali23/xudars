@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{% if is_new %}Профиль ребёнка{% elif child %}Данные ребёнка{% else %}Новый ребёнок{% endif %}{% endblock %}
+{% block content %}
+<div class="auth">
+  <div class="page-head">
+    {% if is_new %}<p class="eyebrow">Шаг 2 из 2</p>{% endif %}
+    <h1>{% if is_new %}Расскажите о ребёнке{% elif child %}Данные ребёнка{% else %}Добавить ребёнка{% endif %}</h1>
+    <p class="lead">Нам нужны только имя, класс и школа, в которую вы поступаете, — чтобы подобрать материал.</p>
+  </div>
+  <form method="post" class="card"{% if action %} action="{{ action }}"{% endif %}>
+    {% csrf_token %}
+    {% include "includes/form_fields.html" %}
+    <button type="submit" class="button">{% if is_new %}Перейти к курсам{% else %}Сохранить{% endif %}</button>
+  </form>
+  {% if not is_new %}<p class="auth-switch"><a href="{% url 'child_profile' %}">Вернуться в профиль</a></p>{% endif %}
+</div>
+{% endblock %}

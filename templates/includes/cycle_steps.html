@@ -1,0 +1,6 @@
+<ol class="cycle" aria-label="Шаги по теме">
+  <li class="{% if step > 1 %}is-done{% elif step == 1 %}is-current{% endif %}"><span class="cycle-dot">1</span><span class="cycle-label">Входной тест</span></li>
+  <li class="{% if step > 2 %}is-done{% elif step == 2 %}is-current{% endif %}"><span class="cycle-dot">2</span><span class="cycle-label">Материал</span></li>
+  <li class="{% if step > 3 %}is-done{% elif step == 3 %}is-current{% endif %}"><span class="cycle-dot">3</span><span class="cycle-label">Итоговый тест</span></li>
+  <li class="{% if step == 4 %}is-current{% endif %}"><span class="cycle-dot">4</span><span class="cycle-label">Результат</span></li>
+</ol>

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Что дальше: {{ topic.title }}{% endblock %}
+{% block content %}
+{% include "includes/back_to_course.html" %}
+{% include "includes/cycle_steps.html" with step=4 %}
+
+{% if progress.status == "passed" %}
+<div class="page-head">
+  <p class="eyebrow">{{ topic.title }} · Следующий шаг</p>
+  <h1>Тема «{{ topic.title }}» пройдена</h1>
+</div>
+{% if next_topic %}
+<section class="card hero hero-row">
+  <div>
+    <p class="eyebrow">{% if next_is_review %}Все темы пройдены — закрепите самую слабую{% else %}Рекомендуем следующую тему{% endif %}</p>
+    <h2>{{ next_topic.title }}</h2>
+  </div>
+  <a class="button" href="{% url 'topic' next_topic.slug %}">Перейти к теме</a>
+</section>
+{% else %}
+<p class="card">Других тем пока нет. Можно повторить эту тему для закрепления.</p>
+{% endif %}
+<div class="actions">
+  <form method="post" action="{% url 'topic_repeat' topic.slug %}">
+    {% csrf_token %}
+    <button type="submit" class="button button-secondary">Повторить эту тему</button>
+  </form>
+  {% if last_final %}<a href="{% url 'topic_result' topic.slug last_final.pk %}">Разбор ошибок</a>{% endif %}
+</div>
+
+{% else %}
+<div class="page-head">
+  <p class="eyebrow">{{ topic.title }} · Следующий шаг</p>
+  <h1>Тему стоит повторить</h1>
+  <p class="lead">Последний результат — {{ progress.last_score }}%, а для прохождения нужно {{ threshold }}%.</p>
+</div>
+<section class="card">
+  <h2>Как повторить</h2>
+  <ol class="guide-steps">
+    <li>Посмотрите разбор ошибок.</li>
+    <li>Проведите занятие ещё раз по блоку «Для родителя: как провести занятие» на странице материала. Больше времени уделите шагам, где были ошибки.</li>
+    <li>Пройдите итоговый тест снова — мы подберём задания, которые ребёнок ещё не решал.</li>
+  </ol>
+  <div class="actions">
+    <form method="post" action="{% url 'topic_repeat' topic.slug %}">
+      {% csrf_token %}
+      <button type="submit" class="button">Повторить тему</button>
+    </form>
+    {% if last_final %}<a href="{% url 'topic_result' topic.slug last_final.pk %}">Разбор ошибок</a>{% endif %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

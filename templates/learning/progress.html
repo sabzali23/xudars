@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Прогресс{% endblock %}
+{% block main_class %}wrap wrap-mid page{% endblock %}
+{% block content %}
+<div class="page-head">
+  <p class="eyebrow">{{ request.child.get_grade_display }} · {{ request.child.target_school }}</p>
+  <h1>Прогресс: {{ request.child.name }}</h1>
+</div>
+
+<div class="progress-grid">
+  <section class="card">
+    <h2>Карта слабых мест</h2>
+    {% if weak %}
+    <p class="small muted">От самого низкого результата к самому высокому. Начинайте с тем вверху списка.</p>
+    <ul class="weak-map">
+      {% for p in weak %}
+      <li class="{% if p.last_score < 50 %}band-low{% elif p.last_score < threshold %}band-mid{% else %}band-high{% endif %}">
+        <a href="{% url 'topic' p.topic.slug %}">{{ p.topic.title }}</a>
+        <strong>{{ p.last_score }}%</strong>
+        <span class="bar"><span style="width: {{ p.last_score }}%"></span></span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="muted">Пока нет результатов. Пройдите входной тест по любой теме.</p>
+    {% endif %}
+  </section>
+
+  {% for s in sections %}
+  <section class="card">
+    <div class="section-head">
+      <h2>{{ s.section.title }}</h2>
+      <span class="muted small">Пройдено {{ s.passed }} из {{ s.total }}</span>
+    </div>
+    {# Диаграмма курса: кольцо «сколько тем пройдено» и полосы «было → стало» по каждой теме. #}
+    <div class="course-chart">
+      <svg class="donut" width="128" height="128" viewBox="0 0 128 128" role="img"
+           aria-label="Пройдено {{ s.percent }} процентов тем курса">
+        <circle cx="64" cy="64" r="52" fill="none" stroke="var(--soft)" stroke-width="15"/>
+        <circle class="donut-fill" cx="64" cy="64" r="52" fill="none" stroke-width="15" stroke-linecap="round"
+                stroke-dasharray="{% widthratio s.percent 100 327 %} 327" transform="rotate(-90 64 64)"/>
+        <text class="donut-value" x="64" y="62" text-anchor="middle">{{ s.percent }}%</text>
+        <text class="donut-label" x="64" y="80" text-anchor="middle">пройдено</text>
+      </svg>
+      <ul class="chart-legend">
+        <li><strong>{{ s.passed }} из {{ s.total }}</strong> тем пройдено</li>
+        <li><strong>{{ s.left }}</strong> осталось</li>
+        {% if s.average is not None %}<li>средний балл <strong>{{ s.average }}%</strong></li>{% endif %}
+      </ul>
+    </div>
+
+    <ul class="topic-bars">
+      {% for topic, p in s.rows %}
+      <li>
+        <span class="tb-name">{{ topic.title }}</span>
+        {# Значение идёт сразу за названием: .tb-tracks занимает обе колонки и сдвинул бы его на отдельную строку. #}
+        <span class="tb-value">{% if p and p.last_score is not None %}{{ p.last_score }}%{% else %}—{% endif %}</span>
+        <span class="tb-tracks">
+          <span class="tb-track"><span class="tb-fill tb-before" style="width: {% if p and p.entry_score is not None %}{{ p.entry_score }}{% else %}0{% endif %}%"></span></span>
+          <span class="tb-track"><span class="tb-fill {% if p and p.last_score is not None %}{% if p.last_score < 50 %}tb-low{% elif p.last_score < threshold %}tb-mid{% else %}tb-high{% endif %}{% endif %}" style="width: {% if p and p.last_score is not None %}{{ p.last_score }}{% else %}0{% endif %}%"></span></span>
+        </span>
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="small muted chart-note"><span class="tb-key tb-before"></span>было (входной тест) · <span class="tb-key tb-high"></span>стало (итоговый тест)</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Тема</th><th>Статус</th><th>Было</th><th>Стало</th></tr></thead>
+        <tbody>
+          {% for topic, p in s.rows %}
+          <tr>
+            <td><a href="{% url 'topic' topic.slug %}">{{ topic.title }}</a></td>
+            <td><span class="status status-{{ p.status|default:'not_started' }}">{% if p %}{{ p.get_status_display }}{% else %}Не начата{% endif %}</span></td>
+            <td>{% if p and p.entry_score is not None %}{{ p.entry_score }}%{% else %}—{% endif %}</td>
+            <td>{% if p and p.last_score is not None %}{{ p.last_score }}%{% else %}—{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

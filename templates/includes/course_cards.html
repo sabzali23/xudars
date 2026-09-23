@@ -1,0 +1,38 @@
+<div class="course-grid">
+  {% for s in courses %}
+  <article class="course-card course-open">
+    <div class="course-top">
+      {# Значок по предмету: пока курсов два, остальным — общий значок книги. #}
+      <span class="icon-box">{% if s.section.slug == "math" %}{% include "includes/icon_math.html" %}{% else %}{% include "includes/icon_book.html" %}{% endif %}</span>
+      <span class="status status-passed">Открыт</span>
+    </div>
+    <h3>{{ s.section.title }}</h3>
+    {% if s.section.description %}<p class="muted">{{ s.section.description }}</p>{% endif %}
+    {% if show_progress %}
+    <div>
+      <div class="bar"><span style="width: {{ s.percent }}%"></span></div>
+      <p class="small muted">Пройдено тем: {{ s.passed }} из {{ s.total }}</p>
+    </div>
+    {% if s.recommended %}<p class="small">Дальше: <strong>{{ s.recommended.title }}</strong></p>{% endif %}
+    <a class="button" href="{% url 'course' s.section.slug %}">{% if s.started %}Продолжить{% else %}Начать{% endif %}</a>
+    {% else %}
+    {# Гостю видны названия модулей; что внутри модуля — только после входа. #}
+    {% if s.topics %}
+    <ul class="course-modules">
+      {% for topic in s.topics %}<li>{{ topic.title }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+    <a class="button" href="{% url 'course' s.section.slug %}">Смотреть программу</a>
+    {% endif %}
+  </article>
+  {% endfor %}
+  {% for title in coming_soon %}
+  <article class="course-card course-soon" aria-disabled="true">
+    <div class="course-top">
+      <span class="icon-box">{% include "includes/icon_book.html" %}</span>
+      <span class="status status-soon">Скоро</span>
+    </div>
+    <h3>{{ title }}</h3>
+  </article>
+  {% endfor %}
+</div>

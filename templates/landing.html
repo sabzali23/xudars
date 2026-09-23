@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Подготовка к поступлению в школу{% endblock %}
+{% block main_class %}landing{% endblock %}
+{% block content %}
+<section class="l-hero">
+  <div class="wrap wrap-wide l-hero-grid">
+    <div>
+      <span class="pill pill-green"><span class="dot"></span>Пилотный этап — бесплатно</span>
+      <h1>Готовим ребёнка к поступлению в школу — понятно и по шагам</h1>
+      <p class="lead">Диагностика, видеообъяснения и практика по темам вступительного экзамена — занимайтесь с ребёнком дома, без репетитора.</p>
+      <div class="l-actions">
+        <a class="button" href="{% url 'signup' %}">Начать бесплатно</a>
+        <a class="button button-secondary" href="#how">Как это работает <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M6 13l6 6 6-6"/></svg></a>
+      </div>
+    </div>
+    <div class="l-preview">
+      <div class="slider">
+        {% for s in stories %}
+        <article class="slide" id="story-{{ forloop.counter }}">
+          <div class="slide-photo">
+            {% if s.photo %}
+            <img src="{% static s.photo %}" alt="{{ s.name }}" loading="lazy">
+            {% else %}
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="3.5"/><path d="M4.5 20c0-3.6 3.4-6.5 7.5-6.5s7.5 2.9 7.5 6.5"/></svg>
+            <span class="small">Здесь будет фото ученика</span>
+            {% endif %}
+          </div>
+          <div class="slide-body">
+            <div class="slide-head">
+              <div>
+                <h3>{{ s.name }}</h3>
+                <p class="small muted">{{ s.detail }} · {{ s.topic }}</p>
+              </div>
+              <span class="status status-passed">Тема пройдена</span>
+            </div>
+            <div class="compare">
+              <div class="score-box"><span class="score-label">Было</span><span class="score">{{ s.before }}%</span></div>
+              <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+              <div class="score-box score-now band-high"><span class="score-label">Стало</span><span class="score">{{ s.after }}%</span></div>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+      <div class="slider-dots">
+        {% for s in stories %}
+        <a href="#story-{{ forloop.counter }}"><span class="visually-hidden">История {{ forloop.counter }}</span></a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="l-band">
+  <div class="wrap wrap-wide">
+    <h2>Почему это работает</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <span class="icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 13l2 2 4-4"/></svg></span>
+        <h3>Знаем, что спросят на экзамене</h3>
+        <p>Разбираем реальные темы вступительных экзаменов школ Хорога — не общий курс «обо всём», а конкретный список того, что нужно повторить.</p>
+      </div>
+      <div class="feature">
+        <span class="icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2"/><path d="M16.5 13.6c2.6.4 4.5 2.7 4.5 5.4"/></svg></span>
+        <h3>Понятно, даже если вы не педагог</h3>
+        <p>Материалы объясняют не только ребёнку, что решать, но и вам — как провести занятие дома, шаг за шагом.</p>
+      </div>
+      <div class="feature">
+        <span class="icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></svg></span>
+        <h3>Доступно из дома</h3>
+        <p>Текстовый конспект открывается даже при слабом интернете, а видео можно посмотреть, когда связь позволяет. Без поездок к репетитору и лишних затрат.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="wrap wrap-wide">
+    <h2>Курсы по предметам</h2>
+    {% include "includes/course_cards.html" with courses=courses show_progress=False %}
+  </div>
+</section>
+
+<section id="how" class="l-band">
+  <div class="wrap wrap-wide">
+    {% include "includes/how_it_works.html" %}
+  </div>
+</section>
+
+<section>
+  <div class="wrap wrap-wide l-parents">
+    {% include "includes/parent_lesson.html" %}
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap wrap-wide">
+    <div class="lead-block">
+      <div>
+        <h2 class="h2-tight">Бесплатная консультация</h2>
+        <p class="muted">Оставьте номер — подскажем, с каких тем начать подготовку ребёнка к поступлению. Сейчас идёт пилотный запуск, занятия бесплатны.</p>
+      </div>
+      <form class="lead-form" method="post" action="{% url 'consultation' %}">
+        {% csrf_token %}
+        {% if form.errors %}
+        <ul class="lead-errors">
+          {% for field in form %}{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}{% endfor %}
+        </ul>
+        {% endif %}
+        <div class="lead-row">
+          <div class="lead-field">
+            <label class="visually-hidden" for="{{ form.name.id_for_label }}">Имя</label>
+            {{ form.name }}
+          </div>
+          <div class="lead-field">
+            <label class="visually-hidden" for="{{ form.grade.id_for_label }}">Класс</label>
+            {{ form.grade }}
+          </div>
+          <div class="lead-field">
+            <label class="visually-hidden" for="{{ form.phone.id_for_label }}">Телефон</label>
+            {{ form.phone }}
+          </div>
+          <button type="submit" class="button">Хочу консультацию</button>
+        </div>
+        <p class="small muted lead-note">Подберём темы под класс ребёнка на бесплатной консультации. Отправляя форму, вы соглашаетесь на обработку персональных данных.</p>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+<footer class="site-footer">
+  <div class="wrap wrap-wide footer-row">
+    {# В футере логотип целиком, в натуральных пропорциях; фон футера белый, как у файла. #}
+    <img class="footer-logo" src="{% static 'img/logo-full.png' %}?v=3" width="280" height="133" alt="{{ SITE_NAME }}">
+    {% if SITE_CONTACT %}<span>Контакт: {{ SITE_CONTACT }}</span>{% endif %}
+    <span>© {% now "Y" %} {{ SITE_NAME }}</span>
+  </div>
+</footer>
+{% endblock %}

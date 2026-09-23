@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Курсы{% endblock %}
+{% block main_class %}wrap wrap-mid page{% endblock %}
+{% block content %}
+<div class="page-head">
+  <p class="eyebrow">{{ request.child.name }} · {{ request.child.get_grade_display }}</p>
+  <h1>Курсы по предметам</h1>
+</div>
+{% include "includes/course_cards.html" with courses=sections show_progress=True %}
+
+{# Те же объяснения, что и на лендинге: после входа гостевая страница недоступна. #}
+<section class="card page-block">
+  {% include "includes/how_it_works.html" %}
+</section>
+
+<section class="l-parents page-block">
+  {% include "includes/parent_lesson.html" %}
+</section>
+{% endblock %}

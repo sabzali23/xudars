@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Результат: {{ topic.title }}{% endblock %}
+{% block content %}
+{% include "includes/back_to_course.html" %}
+{% include "includes/cycle_steps.html" with step=4 %}
+
+<div class="page-head">
+  <p class="eyebrow">{{ topic.title }} · Результат</p>
+  <h1>
+    {% if attempt.kind == "entry" %}Входной тест
+    {% elif passed %}Тема пройдена!
+    {% else %}Нужно ещё потренироваться{% endif %}
+  </h1>
+</div>
+
+<section class="card">
+  <div class="compare">
+    {% if before is not None %}
+    <div class="score-box">
+      <span class="score-label">{{ before_label }}</span>
+      <span class="score">{{ before }}%</span>
+    </div>
+    <svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+    {% endif %}
+    <div class="score-box score-now {% if passed %}band-high{% else %}band-mid{% endif %}">
+      <span class="score-label">Сейчас</span>
+      <span class="score">{{ attempt.score }}%</span>
+    </div>
+  </div>
+  {% if delta is not None %}
+  <p class="delta{% if delta > 0 %} delta-ok{% endif %}">
+    {% if delta > 0 %}+{{ delta }} п.п. — есть прогресс
+    {% elif delta == 0 %}Результат не изменился
+    {% else %}{{ delta }} п.п. — стоит ещё раз перечитать конспект{% endif %}
+  </p>
+  {% endif %}
+  <p class="small muted">Верно {{ correct }} из {{ total }}. Тема считается пройденной от {{ threshold }}%.</p>
+</section>
+
+<h2 class="section-title">Разбор ошибок</h2>
+{% if mistakes %}
+<p class="hint">Для родителя: разберите каждую ошибку вместе. Сначала попросите ребёнка ещё раз решить задание вслух, затем прочитайте объяснение и сравните.</p>
+{% endif %}
+{% for item in mistakes %}
+<div class="card mistake">
+  <p class="question-text">{{ item.question.text|linebreaksbr }}</p>
+  <div class="answer-row"><span class="answer-label">Ответ ребёнка</span><span class="chip-wrong">{{ item.chosen_text }}</span></div>
+  <div class="answer-row"><span class="answer-label">Правильный ответ</span><span class="chip-right">{{ item.correct_text }}</span></div>
+  {% if item.question.explanation %}<p class="explanation"><strong>Как объяснить:</strong> {{ item.question.explanation|linebreaksbr }}</p>{% endif %}
+</div>
+{% empty %}
+<p class="card">Ошибок нет — все ответы верные.</p>
+{% endfor %}
+
+<a class="button" href="{% url 'topic_next' topic.slug %}">Что делать дальше</a>
+{% endblock %}

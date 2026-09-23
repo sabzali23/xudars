@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 280" width="560" height="280" role="img" aria-label="Иллюстрация: ученик с тетрадью">
+  <defs>
+    <linearGradient id="b1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e7f4e9"/>
+      <stop offset="1" stop-color="#c3e3c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="560" height="280" fill="url(#b1)"/>
+  <circle cx="486" cy="62" r="46" fill="#ffffff" opacity=".45"/>
+  <circle cx="92" cy="92" r="22" fill="#ffffff" opacity=".35"/>
+  <g fill="none" stroke="#7fb488" stroke-width="3" stroke-linecap="round" opacity=".55">
+    <path d="M74 186h34M91 169v34"/>
+    <path d="M452 176h34"/>
+    <path d="M469 159v34"/>
+  </g>
+  <g>
+    <path d="M178 280c0-56 46-102 102-102s102 46 102 102z" fill="#2f8f45"/>
+    <path d="M246 172h68v26a34 34 0 0 1-68 0z" fill="#f0bf9b"/>
+    <circle cx="280" cy="126" r="48" fill="#f8d4b4"/>
+    <path d="M232 122a48 48 0 0 1 96 0c0-16-13-21-26-24-17-5-36-3-48 6-12 9-22 5-22 18z" fill="#5b4433"/>
+    <circle cx="264" cy="128" r="4.5" fill="#3d3128"/>
+    <circle cx="297" cy="128" r="4.5" fill="#3d3128"/>
+    <path d="M268 148q12 10 25 0" fill="none" stroke="#3d3128" stroke-width="4" stroke-linecap="round"/>
+    <g transform="rotate(-4 280 244)">
+      <rect x="204" y="216" width="152" height="60" rx="7" fill="#ffffff"/>
+      <g stroke="#a9c7ad" stroke-width="4" stroke-linecap="round">
+        <path d="M224 236h112M224 252h112M224 268h66"/>
+      </g>
+    </g>
+  </g>
+</svg>

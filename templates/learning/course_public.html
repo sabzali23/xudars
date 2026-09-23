@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ section.title }}{% endblock %}
+{% block main_class %}wrap wrap-mid page{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'home' %}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>Все курсы</a>
+<div class="page-head">
+  <div class="course-title">
+    <span class="icon-box">{% if section.slug == "math" %}{% include "includes/icon_math.html" %}{% else %}{% include "includes/icon_book.html" %}{% endif %}</span>
+    <h1>{{ section.title }}</h1>
+  </div>
+  {% if section.description %}<p class="lead">{{ section.description }}</p>{% endif %}
+</div>
+
+<section class="card hero hero-row">
+  <div>
+    <p class="eyebrow">Пилотный этап — бесплатно</p>
+    <h2>Программа курса</h2>
+    {# Без склонения: русских форм три (модуль/модуля/модулей), а фильтр pluralize умеет только две. #}
+    <p class="muted">Всего модулей: {{ topics|length }}. Список тем открыт всем — чтобы заниматься, нужен вход: платформа сохраняет результаты ребёнка по каждой теме.</p>
+  </div>
+  <a class="button" href="{% url 'signup' %}">Начать бесплатно</a>
+</section>
+
+<section class="card">
+  <div class="section-head">
+    <h2>Модули курса</h2>
+    <span class="muted small">Занятия — после входа</span>
+  </div>
+  <ul class="topic-list">
+    {% for topic in topics %}
+    <li>
+      {# Название модуля видно без входа, само занятие открывается только после входа. #}
+      <a class="topic-title" href="{% url 'login' %}?next={% url 'topic' topic.slug %}">{{ topic.title }}</a>
+      <span class="status status-not_started">Нужен вход</span>
+    </li>
+    {% empty %}
+    <li>Модули курса пока не загружены.</li>
+    {% endfor %}
+  </ul>
+  <p class="small muted">Внутри каждого модуля: входной тест → материал с объяснением для родителя → итоговый тест → результат «было/стало» и рекомендация.</p>
+</section>
+{% endblock %}

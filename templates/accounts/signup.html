@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+<div class="auth">
+  <div class="page-head">
+    <p class="eyebrow">Шаг 1 из 2</p>
+    <h1>Регистрация</h1>
+    <p class="lead">Аккаунт создаёт родитель. На следующем шаге — профиль ребёнка.</p>
+  </div>
+  <form method="post" class="card">
+    {% csrf_token %}
+    {% include "includes/form_fields.html" %}
+    <button type="submit" class="button">Создать аккаунт</button>
+  </form>
+  <p class="auth-switch">Уже зарегистрированы? <a href="{% url 'login' %}">Войти</a></p>
+</div>
+{% endblock %}

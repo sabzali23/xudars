@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<div class="auth">
+  <div class="page-head">
+    <h1>Вход</h1>
+    <p class="lead">Продолжите подготовку с того места, где остановились.</p>
+  </div>
+  <form method="post" class="card">
+    {% csrf_token %}
+    {# Куда вернуть после входа: например, курс, который родитель открыл с лендинга. #}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+    {% include "includes/form_fields.html" %}
+    <button type="submit" class="button">Войти</button>
+  </form>
+  <p class="auth-switch">Впервые здесь? <a href="{% url 'signup' %}">Зарегистрироваться</a></p>
+</div>
+{% endblock %}

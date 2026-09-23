@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 280" width="560" height="280" role="img" aria-label="Иллюстрация: ученик поднимает руку">
+  <defs>
+    <linearGradient id="b2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fdeed2"/>
+      <stop offset="1" stop-color="#f7d5a4"/>
+    </linearGradient>
+  </defs>
+  <rect width="560" height="280" fill="url(#b2)"/>
+  <circle cx="86" cy="70" r="38" fill="#ffffff" opacity=".45"/>
+  <circle cx="470" cy="104" r="20" fill="#ffffff" opacity=".4"/>
+  <g fill="none" stroke="#d99b43" stroke-width="3" stroke-linecap="round" opacity=".5">
+    <path d="M446 190h34M463 173v34"/>
+    <path d="M78 178h30"/>
+  </g>
+  <g>
+    <path d="M182 280c0-54 44-98 98-98s98 44 98 98z" fill="#e08a2c"/>
+    <path d="M248 176h64v24a32 32 0 0 1-64 0z" fill="#e0ad82"/>
+    <path d="M372 214l-34-12 22-74a13 13 0 0 1 25 7z" fill="#f6d2b2"/>
+    <circle cx="380" cy="120" r="17" fill="#f6d2b2"/>
+    <circle cx="280" cy="130" r="47" fill="#f6d2b2"/>
+    <path d="M233 126c0-26 21-47 47-47s47 21 47 47c-5-14-16-17-27-20-16-5-33-5-45 3-10 6-17 3-22 17z" fill="#2f2a26"/>
+    <circle cx="264" cy="132" r="4.5" fill="#3d3128"/>
+    <circle cx="297" cy="132" r="4.5" fill="#3d3128"/>
+    <path d="M268 152q12 10 25 0" fill="none" stroke="#3d3128" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>

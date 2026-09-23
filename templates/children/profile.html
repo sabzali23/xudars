@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Профиль{% endblock %}
+{% block main_class %}wrap wrap-mid page{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Профиль</h1>
+  <p class="lead">Здесь собраны данные вашего аккаунта и профили детей.</p>
+</div>
+
+<section class="card">
+  <h2>Родитель</h2>
+  <dl class="data-list">
+    <div><dt>Имя</dt><dd>{{ parent.name }}</dd></div>
+    <div><dt>Телефон</dt><dd>{{ parent.phone }}</dd></div>
+    <div><dt>Telegram</dt><dd>{% if parent.telegram %}{{ parent.telegram }}{% else %}<span class="muted">не указан</span>{% endif %}</dd></div>
+    <div><dt>На платформе с</dt><dd>{{ parent.date_joined|date:"d.m.Y" }}</dd></div>
+  </dl>
+</section>
+
+<div class="children-head">
+  <h2>Дети</h2>
+  <a class="button button-small" href="{% url 'child_add' %}">Добавить ребёнка</a>
+</div>
+
+{% for row in rows %}
+<section class="card child-card{% if row.is_active %} child-active{% endif %}">
+  <div class="section-head">
+    <h3>{{ row.child.name }}{% if row.is_active %} <span class="status status-passed">Занимается сейчас</span>{% endif %}</h3>
+    <a class="small" href="{% url 'child_edit' row.child.pk %}">Изменить</a>
+  </div>
+  <dl class="data-list">
+    <div><dt>Класс</dt><dd>{{ row.child.get_grade_display }}</dd></div>
+    <div><dt>Целевая школа</dt><dd>{{ row.child.target_school }}</dd></div>
+    <div><dt>Профиль создан</dt><dd>{{ row.child.created_at|date:"d.m.Y" }}</dd></div>
+  </dl>
+
+  {% for s in row.sections %}
+  <div class="profile-course">
+    <div class="section-head">
+      <strong>{{ s.section.title }}</strong>
+      <span class="small muted">
+        Пройдено {{ s.passed }} из {{ s.total }}{% if s.average is not None %} · средний балл {{ s.average }}%{% endif %}
+      </span>
+    </div>
+    <div class="bar"><span style="width: {{ s.percent }}%"></span></div>
+  </div>
+  {% endfor %}
+
+  {% if row.is_active %}
+  <p class="small muted">Занятия, прогресс и рекомендации сейчас показываются для этого ребёнка.</p>
+  {% else %}
+  <form method="post" action="{% url 'child_switch' row.child.pk %}">
+    {% csrf_token %}
+    {# Через двоеточие, чтобы не склонять имя: «Заниматься с Далер» звучало бы неграмотно. #}
+    <button type="submit" class="button">Заниматься: {{ row.child.name }}</button>
+  </form>
+  {% endif %}
+</section>
+{% endfor %}
+
+<p class="small muted">У каждого ребёнка свой прогресс и свои результаты — они не смешиваются.</p>
+
+{% endblock %}

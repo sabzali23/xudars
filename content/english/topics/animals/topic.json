@@ -1,0 +1,83 @@
+{
+  "title": "Животные и слова по картинкам",
+  "order": 3,
+  "video_url": "",
+  "questions": {
+    "entry": [
+      {
+        "text": "Как по-английски «кошка»?",
+        "options": ["dog", "cat", "cow", "car"],
+        "correct": 1,
+        "explanation": "Кошка — cat («кэт»). Слово car («кар») означает «машина»."
+      },
+      {
+        "text": "Как по-английски «собака»?",
+        "options": ["dog", "frog", "door", "doll"],
+        "correct": 0,
+        "explanation": "Собака — dog («дог»). Frog — это лягушка, doll — кукла."
+      },
+      {
+        "text": "На картинке кролик. Какое слово подписано верно?",
+        "options": ["Carrot", "Rabbit", "Parrot"],
+        "correct": 1,
+        "explanation": "Кролик — rabbit. Carrot — морковка, parrot — попугай. Эти три слова похожи, их часто путают."
+      },
+      {
+        "text": "Вставьте пропущенные буквы: H__RS__. Какое это слово?",
+        "options": ["HORSE", "HOUSE", "HORSA", "HERSE"],
+        "correct": 0,
+        "explanation": "Лошадь — horse: H-O-R-S-E. House («хаус») пишется похоже, но означает «дом»."
+      },
+      {
+        "text": "Как по-английски «мышь»?",
+        "options": ["mouse", "house", "mouth", "mother"],
+        "correct": 0,
+        "explanation": "Мышь — mouse («маус»). Отличается от house («дом») только первой буквой."
+      }
+    ],
+    "final": [
+      {
+        "text": "Как по-английски «медведь»?",
+        "options": ["bear", "beer", "bird", "bee"],
+        "correct": 0,
+        "explanation": "Медведь — bear («бэа»). Bird — птица, bee — пчела."
+      },
+      {
+        "text": "Как по-английски «змея»?",
+        "options": ["snack", "snake", "shake", "sneak"],
+        "correct": 1,
+        "explanation": "Змея — snake («снэйк»). Snack — перекус, слова отличаются одной буквой."
+      },
+      {
+        "text": "На картинке попугай. Какое слово подписано верно?",
+        "options": ["Carrot", "Parrot", "Rabbit"],
+        "correct": 1,
+        "explanation": "Попугай — parrot. Carrot — морковка: отличие только в первой букве."
+      },
+      {
+        "text": "Вставьте пропущенные буквы: R__BB__T. Какое это слово?",
+        "options": ["RABBIT", "ROBBIT", "RUBBIT", "RABBET"],
+        "correct": 0,
+        "explanation": "Кролик — rabbit: R-A-B-B-I-T. Две буквы B подряд."
+      },
+      {
+        "text": "На картинке собака. Какая буква пропущена в слове __OG?",
+        "options": ["D", "B", "F", "L"],
+        "correct": 0,
+        "explanation": "Собака — dog, пропущена буква D."
+      },
+      {
+        "text": "Как по-английски «кенгуру»?",
+        "options": ["kangaroo", "kangoroo", "kangaru", "kenguru"],
+        "correct": 0,
+        "explanation": "Кенгуру — kangaroo. Запомните: в конце две буквы O."
+      },
+      {
+        "text": "Как по-английски «велосипед»?",
+        "options": ["bicycle", "bycicle", "bicicle", "bicykle"],
+        "correct": 0,
+        "explanation": "Велосипед — bicycle («байсикл»). Пишется через C в середине и заканчивается на -cle."
+      }
+    ]
+  }
+}

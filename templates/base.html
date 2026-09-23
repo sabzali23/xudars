@@ -1,0 +1,48 @@
+{% load static %}<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Подготовка к поступлению в школу{% endblock %} · {{ SITE_NAME }}</title>
+  <meta name="description" content="Подготовка ребёнка к поступлению в школу в Хороге: входной тест, объяснение для родителя и понятный результат по каждой теме.">
+  <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+  {# ?v= меняем при правках стилей: иначе браузер показывает старый CSS из кеша. #}
+  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=12">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap wrap-wide header-row">
+      {# Логотип целиком, как в исходном файле: шапка подстроена под него, а не логотип под шапку. #}
+      <a class="brand" href="{% url 'home' %}"><img class="brand-logo" src="{% static 'img/logo-full.png' %}?v=3" width="700" height="330" alt="{{ SITE_NAME }}"></a>
+      {% if user.is_authenticated %}
+      <nav class="nav">
+        <a href="{% url 'home' %}">Курсы</a>
+        <a href="{% url 'progress' %}">Прогресс</a>
+        <a href="{% url 'child_profile' %}">Профиль</a>
+        <form method="post" action="{% url 'logout' %}" class="inline">
+          {% csrf_token %}
+          <button type="submit" class="link-button">Выйти</button>
+        </form>
+      </nav>
+      {% else %}
+      <nav class="nav">
+        <a class="nav-anchor" href="{% url 'home' %}#courses">Курсы</a>
+        <a class="nav-anchor" href="{% url 'home' %}#how">Как это работает</a>
+        <a class="nav-anchor" href="{% url 'home' %}#about">О проекте</a>
+        <a href="{% url 'login' %}">Войти</a>
+        <a class="button button-small" href="{% url 'signup' %}"><span>Начать<span class="hide-narrow"> бесплатно</span></span></a>
+      </nav>
+      {% endif %}
+    </div>
+  </header>
+  <main class="{% block main_class %}wrap page{% endblock %}">
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}<li class="message message-{{ message.tags }}">{{ message }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  {% block footer %}{% endblock %}
+</body>
+</html>

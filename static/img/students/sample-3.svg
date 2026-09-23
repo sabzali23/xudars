@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 280" width="560" height="280" role="img" aria-label="Иллюстрация: ученик за столом с книгой">
+  <defs>
+    <linearGradient id="b3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dcf3e6"/>
+      <stop offset="1" stop-color="#b4e4ce"/>
+    </linearGradient>
+  </defs>
+  <rect width="560" height="280" fill="url(#b3)"/>
+  <circle cx="474" cy="66" r="42" fill="#ffffff" opacity=".45"/>
+  <circle cx="90" cy="98" r="19" fill="#ffffff" opacity=".4"/>
+  <g fill="none" stroke="#4fa37c" stroke-width="3" stroke-linecap="round" opacity=".5">
+    <path d="M76 180h32M92 164v32"/>
+    <path d="M452 168h32M468 152v32"/>
+  </g>
+  <g>
+    <path d="M186 248c0-52 42-94 94-94s94 42 94 94z" fill="#2f9169"/>
+    <path d="M248 150h64v24a32 32 0 0 1-64 0z" fill="#d9a179"/>
+    <circle cx="280" cy="112" r="47" fill="#eebd95"/>
+    <path d="M233 110a47 47 0 0 1 94 0c0-17-13-23-25-27-17-5-38-3-50 8-11 9-19 5-19 19z" fill="#4a3526"/>
+    <circle cx="264" cy="114" r="4.5" fill="#3d3128"/>
+    <circle cx="297" cy="114" r="4.5" fill="#3d3128"/>
+    <path d="M268 134q12 10 25 0" fill="none" stroke="#3d3128" stroke-width="4" stroke-linecap="round"/>
+    <path d="M280 246l-78-20v-28l78 20z" fill="#ffffff"/>
+    <path d="M280 246l78-20v-28l-78 20z" fill="#eef2f7"/>
+    <path d="M280 218l-78-20 78-18 78 18z" fill="#ffffff"/>
+    <rect x="150" y="246" width="260" height="34" rx="9" fill="#1f7a58"/>
+  </g>
+</svg>
