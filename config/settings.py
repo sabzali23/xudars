@@ -7,13 +7,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-insecure-key-change-in-production")
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
-ALLOWED_HOSTS = [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h]
-CSRF_TRUSTED_ORIGINS = []
+# Свой домен добавляется одной переменной DJANGO_ALLOWED_HOSTS (через запятую, можно несколько:
+# xudars.tj,www.xudars.tj). Старый адрес на onrender.com при этом продолжает работать.
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
+
+# Каждому внешнему имени нужен и доверенный источник, иначе Django отклонит POST с формы входа
+# и заявки на консультацию с ошибкой 403: проверка CSRF сверяет заголовок Origin именно с этим списком.
+# Локальные адреса сюда не попадают — они ходят по http и в проверке не участвуют.
+LOCAL_HOSTS = {"localhost", "127.0.0.1", "0.0.0.0", "[::1]", "testserver"}
+CSRF_TRUSTED_ORIGINS = [f"https://{h}" for h in ALLOWED_HOSTS if h not in LOCAL_HOSTS and not h.startswith(".")]
 
 # Render подставляет адрес приложения сам; без этого сайт после первого развёртывания ответит 400,
 # а формы входа и заявки — 403 из-за проверки источника запроса.
 RENDER_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
-if RENDER_HOSTNAME:
+if RENDER_HOSTNAME and RENDER_HOSTNAME not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append(RENDER_HOSTNAME)
     CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_HOSTNAME}")
 
