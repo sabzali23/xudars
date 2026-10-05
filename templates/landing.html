@@ -15,39 +15,7 @@
       </div>
     </div>
     <div class="l-preview">
-      <div class="slider">
-        {% for s in stories %}
-        <article class="slide" id="story-{{ forloop.counter }}">
-          <div class="slide-photo">
-            {% if s.photo %}
-            <img src="{% static s.photo %}" alt="{{ s.name }}" loading="lazy">
-            {% else %}
-            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="3.5"/><path d="M4.5 20c0-3.6 3.4-6.5 7.5-6.5s7.5 2.9 7.5 6.5"/></svg>
-            <span class="small">Здесь будет фото ученика</span>
-            {% endif %}
-          </div>
-          <div class="slide-body">
-            <div class="slide-head">
-              <div>
-                <h3>{{ s.name }}</h3>
-                <p class="small muted">{{ s.detail }} · {{ s.topic }}</p>
-              </div>
-              <span class="status status-passed">Тема пройдена</span>
-            </div>
-            <div class="compare">
-              <div class="score-box"><span class="score-label">Было</span><span class="score">{{ s.before }}%</span></div>
-              <svg class="arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
-              <div class="score-box score-now band-high"><span class="score-label">Стало</span><span class="score">{{ s.after }}%</span></div>
-            </div>
-          </div>
-        </article>
-        {% endfor %}
-      </div>
-      <div class="slider-dots">
-        {% for s in stories %}
-        <a href="#story-{{ forloop.counter }}"><span class="visually-hidden">История {{ forloop.counter }}</span></a>
-        {% endfor %}
-      </div>
+      {% include "includes/knowledge_slider.html" %}
     </div>
   </div>
 </section>
@@ -75,14 +43,8 @@
   </div>
 </section>
 
-<section id="courses">
-  <div class="wrap wrap-wide">
-    <h2>Курсы по предметам</h2>
-    {% include "includes/course_cards.html" with courses=courses show_progress=False %}
-  </div>
-</section>
-
-<section id="how" class="l-band">
+{# Белая полоса .l-band чередуется с фоном страницы; соседние блоки её не повторяют. #}
+<section id="how">
   <div class="wrap wrap-wide">
     {% include "includes/how_it_works.html" %}
   </div>
@@ -91,6 +53,18 @@
 <section>
   <div class="wrap wrap-wide l-parents">
     {% include "includes/parent_lesson.html" %}
+  </div>
+</section>
+
+{% comment %}
+Курсы стоят последними перед формой: сначала объясняем, как всё устроено, и только потом
+показываем, что именно можно изучать, — чтобы читатель дошёл до каталога уже подготовленным.
+Однострочный {# … #} здесь не годится: в Django он не переносится на вторую строку и выводится текстом.
+{% endcomment %}
+<section id="courses" class="l-band">
+  <div class="wrap wrap-wide">
+    <h2>Курсы по предметам</h2>
+    {% include "includes/course_cards.html" with courses=courses show_progress=False %}
   </div>
 </section>
 
@@ -114,16 +88,12 @@
             {{ form.name }}
           </div>
           <div class="lead-field">
-            <label class="visually-hidden" for="{{ form.grade.id_for_label }}">Класс</label>
-            {{ form.grade }}
-          </div>
-          <div class="lead-field">
             <label class="visually-hidden" for="{{ form.phone.id_for_label }}">Телефон</label>
             {{ form.phone }}
           </div>
           <button type="submit" class="button">Хочу консультацию</button>
         </div>
-        <p class="small muted lead-note">Подберём темы под класс ребёнка на бесплатной консультации. Отправляя форму, вы соглашаетесь на обработку персональных данных.</p>
+        <p class="small muted lead-note">Перезвоним и подберём темы под возраст ребёнка. Отправляя форму, вы соглашаетесь на обработку персональных данных.</p>
       </form>
     </div>
   </div>
@@ -134,7 +104,7 @@
 <footer class="site-footer">
   <div class="wrap wrap-wide footer-row">
     {# В футере логотип целиком, в натуральных пропорциях; фон футера белый, как у файла. #}
-    <img class="footer-logo" src="{% static 'img/logo-full.png' %}?v=3" width="280" height="133" alt="{{ SITE_NAME }}">
+    <img class="footer-logo" src="{% static 'img/logo-full.png' %}?v=6" width="280" height="113" alt="{{ SITE_NAME }}">
     {% if SITE_CONTACT %}<span>Контакт: {{ SITE_CONTACT }}</span>{% endif %}
     <span>© {% now "Y" %} {{ SITE_NAME }}</span>
   </div>

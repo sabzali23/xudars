@@ -28,5 +28,7 @@ class Command(BaseCommand):
         for request in requests:
             mark = "" if request.handled_at is None else "  (обработана)"
             when = timezone.localtime(request.created_at).strftime("%d.%m.%Y %H:%M")
-            self.stdout.write(f"#{request.pk}  {when}  {request.name}  {request.get_grade_display()}  {request.phone}{mark}")
+            # Класс в форме больше не спрашивают, поэтому он есть только у старых заявок.
+            grade = f"  {request.get_grade_display()}" if request.grade else ""
+            self.stdout.write(f"#{request.pk}  {when}  {request.name}{grade}  {request.phone}{mark}")
         self.stdout.write(f"Всего: {len(requests)}")

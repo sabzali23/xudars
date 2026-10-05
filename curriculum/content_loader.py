@@ -13,10 +13,9 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-import markdown
 from django.db import transaction
 
-from .models import Material, Question, Section, TestKind, Topic
+from .models import Material, Question, Section, TestKind, Topic, render_markdown  # noqa: F401
 
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
@@ -59,10 +58,6 @@ def load_content(root, test_size):
     sections = read_content(Path(root), test_size)
     write_content(sections)
     return sections
-
-
-def render_markdown(text):
-    return markdown.markdown(text, extensions=["extra", "sane_lists"])
 
 
 # --- Чтение и проверка ---

@@ -18,6 +18,7 @@ if RENDER_HOSTNAME:
     CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_HOSTNAME}")
 
 INSTALLED_APPS = [
+    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -91,6 +92,9 @@ LOGOUT_REDIRECT_URL = "home"
 # Родитель не должен заново входить каждый день.
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 90
 
+# Ссылку на смену пароля владелец платформы выдаёт вручную после звонка, поэтому сутки — с запасом.
+PASSWORD_RESET_TIMEOUT = 60 * 60 * 24
+
 LANGUAGE_CODE = "ru"
 TIME_ZONE = "Asia/Dushanbe"
 USE_I18N = True
@@ -121,37 +125,6 @@ SITE_CONTACT = os.environ.get("SITE_CONTACT", "")
 # Предметы, показанные в каталоге как «Скоро» (неактивны в v1).
 # Подставить те, что реально входят во вступительный экзамен целевой школы.
 COMING_SOON_COURSES = []
-
-# Истории учеников в слайдере на лендинге. Сейчас это образцы — заменить на реальные,
-# и только с согласия родителей. В «photo» — путь относительно static/; пустое значение
-# показывает заглушку. Пока стоят рисованные картинки-образцы (не фото реальных детей):
-# заменить на настоящие фото, положив файлы в static/img/students/.
-STUDENT_STORIES = [
-    {
-        "name": "[Имя ученика]",
-        "detail": "4 класс · Хорог",
-        "topic": "Обыкновенные дроби",
-        "before": 40,
-        "after": 100,
-        "photo": "img/students/sample-1.svg",
-    },
-    {
-        "name": "[Имя ученика]",
-        "detail": "3 класс · Хорог",
-        "topic": "Проценты",
-        "before": 20,
-        "after": 80,
-        "photo": "img/students/sample-2.svg",
-    },
-    {
-        "name": "[Имя ученика]",
-        "detail": "4 класс · Хорог",
-        "topic": "Задачи на движение",
-        "before": 60,
-        "after": 100,
-        "photo": "img/students/sample-3.svg",
-    },
-]
 
 # --- Правила учебного цикла ---
 

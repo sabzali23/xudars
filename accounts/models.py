@@ -46,3 +46,34 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.name} ({self.phone})"
+
+
+class PasswordResetRequest(models.Model):
+    """Заявка «забыл пароль».
+
+    Ни почты, ни SMS у проекта нет, поэтому пароль восстанавливается через человека: родитель
+    оставляет заявку, владелец платформы звонит по указанному номеру и убеждается, что это
+    действительно он, и выдаёт одноразовую ссылку на смену пароля. Сама ссылка нигде не хранится:
+    она собирается в момент выдачи из стандартного токена Django и перестаёт работать, как только
+    пароль изменён или истёк срок (`settings.PASSWORD_RESET_TIMEOUT`).
+    """
+
+    phone = models.CharField("Телефон", max_length=20)
+    user = models.ForeignKey(
+        "accounts.User",
+        verbose_name="родитель",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="password_reset_requests",
+    )
+    created_at = models.DateTimeField("Оставлена", auto_now_add=True)
+    handled_at = models.DateTimeField("Ссылка выдана", null=True, blank=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "заявка на смену пароля"
+        verbose_name_plural = "заявки на смену пароля"
+
+    def __str__(self):
+        return f"{self.phone} от {self.created_at:%d.%m.%Y}"

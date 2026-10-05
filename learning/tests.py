@@ -1,9 +1,12 @@
+from pathlib import Path
+
 from django.conf import settings
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from curriculum.models import Question, Section, TestKind, Topic
 from curriculum.testing import make_child, make_topic
+from learning.facts import KNOWLEDGE_CARDS
 from learning.models import Stage, TestAttempt, TopicProgress, TopicStatus
 from learning.services.recommendation import recommend_topic
 
@@ -158,14 +161,26 @@ class CycleTests(TestCase):
         self.assertContains(response, reverse("signup"))
         self.assertContains(response, "Тестовый предмет")
         self.assertContains(response, "Скоро")
-        # Слайдер историй учеников: по слайду на каждую историю и точка-ссылка на него.
-        self.assertEqual(len(response.context["stories"]), len(settings.STUDENT_STORIES))
-        for number, story in enumerate(settings.STUDENT_STORIES, start=1):
-            self.assertContains(response, f'id="story-{number}"')
-            self.assertContains(response, f'href="#story-{number}"')
-            self.assertContains(response, story["topic"])
-            if story["photo"]:
-                self.assertContains(response, story["photo"])
+        # Слайдер «Интересно детям»: на каждую карточку свой слайд и точка-ссылка.
+        for number, fact in enumerate(KNOWLEDGE_CARDS, start=1):
+            self.assertContains(response, f'id="fact-{number}"')
+            self.assertContains(response, f'href="#fact-{number}"')
+            self.assertContains(response, fact["title"])
+
+    def test_landing_has_no_made_up_students(self):
+        """Выдуманные истории и фото детей на лендинге неуместны."""
+        self.client.logout()
+        response = self.client.get(reverse("home"))
+        self.assertNotContains(response, "Имя ученика")
+        self.assertNotContains(response, "img/students/")
+
+    def test_every_knowledge_card_is_complete(self):
+        """Карточка без рисунка или без вопроса родителю разъезжается на лендинге."""
+        icons = (Path(settings.BASE_DIR) / "templates" / "includes" / "fact_icon.html").read_text("utf-8")
+        for fact in KNOWLEDGE_CARDS:
+            for field in ("tag", "icon", "title", "text", "ask"):
+                self.assertTrue(fact.get(field), f"в карточке {fact.get('title')!r} пусто поле {field}")
+            self.assertIn(f'"{fact["icon"]}"', icons, f"нет рисунка {fact['icon']} в fact_icon.html")
 
     def test_guest_sees_course_modules_but_not_what_is_inside(self):
         self.client.logout()

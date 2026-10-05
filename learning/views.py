@@ -8,6 +8,7 @@ from children.decorators import child_required
 from curriculum.models import Material, Section, TestKind, Topic
 from leads.forms import ConsultationForm
 
+from .facts import KNOWLEDGE_CARDS
 from .models import Stage, TestAttempt, TopicProgress, TopicStatus
 from .services import progress as progress_service
 from .services import quiz
@@ -47,7 +48,7 @@ def landing_context(form=None):
     return {
         "courses": courses,
         "coming_soon": settings.COMING_SOON_COURSES,
-        "stories": settings.STUDENT_STORIES,
+        "facts": KNOWLEDGE_CARDS,
         "form": form or ConsultationForm(),
     }
 

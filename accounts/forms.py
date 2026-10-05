@@ -1,9 +1,9 @@
 from django import forms
 from django.contrib.auth import password_validation
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, SetPasswordForm
 from django.core.exceptions import ValidationError
 
-from .models import User
+from .models import PasswordResetRequest, User
 from .phone import normalize_phone
 
 PHONE_ATTRS = {"type": "tel", "autocomplete": "tel", "placeholder": "+992 93 123 45 67"}
@@ -60,7 +60,25 @@ class PhoneLoginForm(AuthenticationForm):
     error_messages = {
         **AuthenticationForm.error_messages,
         "invalid_login": "Неверный телефон или пароль.",
+        "inactive": "Ваш аккаунт не активирован. Свяжитесь с нами, и мы его включим.",
     }
+
+    def clean(self):
+        """Django отвечает одинаково на неверный пароль и на выключенный аккаунт — разбираем отдельно.
+
+        О том, что аккаунт выключен, сообщаем только тому, кто ввёл верный пароль: иначе по ответу
+        формы можно было бы перебором узнавать, какие номера зарегистрированы.
+        """
+        try:
+            return super().clean()
+        except ValidationError:
+            phone = self.cleaned_data.get("username")
+            password = self.cleaned_data.get("password")
+            if phone and password:
+                user = User.objects.filter(phone=phone).first()
+                if user is not None and not user.is_active and user.check_password(password):
+                    raise ValidationError(self.error_messages["inactive"], code="inactive")
+            raise
 
     def clean_username(self):
         raw = self.cleaned_data["username"]
@@ -68,3 +86,43 @@ class PhoneLoginForm(AuthenticationForm):
             return normalize_phone(raw)
         except ValidationError:
             return raw
+
+
+class PasswordResetRequestForm(forms.Form):
+    """Форма «забыли пароль»: родитель оставляет номер, по которому с ним свяжутся."""
+
+    phone = forms.CharField(label="Телефон", widget=forms.TextInput(attrs={**PHONE_ATTRS, "autofocus": True}))
+
+    def clean_phone(self):
+        return normalize_phone(self.cleaned_data["phone"])
+
+    def save(self):
+        """Создаёт заявку, если такой номер зарегистрирован.
+
+        Ответ страницы одинаков и для известного, и для незнакомого номера: иначе по форме можно
+        было бы перебором узнать, какие телефоны есть в базе. Повторная заявка по тому же номеру
+        не создаётся, пока прошлая не обработана, — иначе список заявок легко забить.
+        """
+        phone = self.cleaned_data["phone"]
+        user = User.objects.filter(phone=phone).first()
+        if user is None:
+            return None
+        existing = PasswordResetRequest.objects.filter(user=user, handled_at__isnull=True).first()
+        return existing or PasswordResetRequest.objects.create(phone=phone, user=user)
+
+
+class NewPasswordForm(SetPasswordForm):
+    """Смена пароля по одноразовой ссылке."""
+
+    new_password1 = forms.CharField(
+        label="Новый пароль",
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", "autofocus": True}),
+        help_text="Не короче 6 символов.",
+    )
+    new_password2 = forms.CharField(
+        label="Новый пароль ещё раз",
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+    )
+    error_messages = {**SetPasswordForm.error_messages, "password_mismatch": "Пароли не совпадают."}

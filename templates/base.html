@@ -7,13 +7,13 @@
   <meta name="description" content="Подготовка ребёнка к поступлению в школу в Хороге: входной тест, объяснение для родителя и понятный результат по каждой теме.">
   <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
   {# ?v= меняем при правках стилей: иначе браузер показывает старый CSS из кеша. #}
-  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=12">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=15">
 </head>
 <body>
   <header class="site-header">
     <div class="wrap wrap-wide header-row">
       {# Логотип целиком, как в исходном файле: шапка подстроена под него, а не логотип под шапку. #}
-      <a class="brand" href="{% url 'home' %}"><img class="brand-logo" src="{% static 'img/logo-full.png' %}?v=3" width="700" height="330" alt="{{ SITE_NAME }}"></a>
+      <a class="brand" href="{% url 'home' %}"><img class="brand-logo" src="{% static 'img/logo-full.png' %}?v=6" width="700" height="282" alt="{{ SITE_NAME }}"></a>
       {% if user.is_authenticated %}
       <nav class="nav">
         <a href="{% url 'home' %}">Курсы</a>

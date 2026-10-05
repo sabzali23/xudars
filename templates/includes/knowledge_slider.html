@@ -1,0 +1,28 @@
+{% comment %}
+Слайдер «Интересно детям»: кругозор, а не реклама и не выдуманные истории учеников.
+Листается без JS — прокруткой с прилипанием, точки снизу это обычные ссылки на якоря.
+Содержимое — learning/facts.py.
+{% endcomment %}
+<div class="slider">
+  {% for fact in facts %}
+  <article class="slide" id="fact-{{ forloop.counter }}">
+    <div class="slide-cap">
+      <span class="pill pill-green"><span class="dot"></span>Интересно детям</span>
+      <span class="small muted">{{ fact.tag }}</span>
+    </div>
+    <div class="slide-body">
+      <div class="fact-head">
+        {% include "includes/fact_icon.html" with icon=fact.icon %}
+        <h3>{{ fact.title }}</h3>
+      </div>
+      <p>{{ fact.text }}</p>
+      <p class="fact-ask"><span class="fact-ask-label">Спросите ребёнка</span>{{ fact.ask }}</p>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+<div class="slider-dots">
+  {% for fact in facts %}
+  <a href="#fact-{{ forloop.counter }}"><span class="visually-hidden">{{ fact.title }}</span></a>
+  {% endfor %}
+</div>

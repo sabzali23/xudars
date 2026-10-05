@@ -1,0 +1,213 @@
+/* Оформление админки под XuDars.
+
+   Django задаёт цвета админки переменными на :root в своём admin/css/base.css. Этот файл
+   подключается после него (см. templates/admin/base_site.html), поэтому те же переменные,
+   объявленные здесь, побеждают. Цвета — те же, что на сайте: сняты пиксельно с логотипа.
+
+   Тёмную тему Django объявляет отдельными блоками; их приходится повторять такими же
+   селекторами, иначе зелёные ссылки останутся нечитаемыми на тёмном фоне. */
+
+:root {
+  --xd-green: #0c6c3c;
+  --xd-green-dark: #00543c;
+  --xd-leaf: #54a848;
+  --xd-border: #d9e2db;
+
+  --primary: var(--xd-green);
+  --secondary: var(--xd-green-dark);
+  --accent: var(--xd-leaf);
+  --primary-fg: #fff;
+
+  /* Шапка белая в обеих темах: на тёмно-зелёном фоне тёмно-зелёные буквы логотипа пропадают. */
+  --header-bg: #fff;
+  --header-color: #5a6b5f;
+  --header-link-color: var(--xd-green);
+  --header-branding-color: var(--xd-green);
+
+  --breadcrumbs-bg: var(--xd-green);
+  --breadcrumbs-fg: #cfe6da;
+  --breadcrumbs-link-fg: #fff;
+
+  --link-fg: var(--xd-green);
+  --link-hover-color: var(--xd-green-dark);
+  --link-selected-fg: var(--xd-green-dark);
+
+  --button-bg: var(--xd-green);
+  --button-hover-bg: var(--xd-green-dark);
+  --default-button-bg: var(--xd-green-dark);
+  --default-button-hover-bg: #003d2b;
+  --object-tools-bg: var(--xd-green-dark);
+  --object-tools-hover-bg: var(--xd-green);
+
+  --selected-row: #eaf4ee;
+  --message-success-bg: #e2f0e8;
+}
+
+/* Тёмная тема Django (dark_mode.css) переопределяет --primary своим синим и делает это
+   селектором посильнее, чем :root. Поэтому зелёный приходится задавать здесь ещё раз —
+   иначе половина админки в тёмной теме уезжает в синий. Зелёный взят посветлее: тёмный
+   #0c6c3c на почти чёрном фоне не читается. */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"],
+  :root:not([data-theme]) {
+    --primary: #1d7f4a;
+    --secondary: var(--xd-green);
+    --link-fg: #7fd1a0;
+    --link-hover-color: #a6e3c0;
+    --link-selected-fg: #a6e3c0;
+    --selected-row: #10281c;
+    --message-success-bg: #10401f;
+    --button-bg: #1d7f4a;
+    --button-hover-bg: #27955a;
+    --default-button-bg: var(--xd-green);
+    --default-button-hover-bg: #1d7f4a;
+  }
+}
+
+html[data-theme="dark"] {
+  --primary: #1d7f4a;
+  --secondary: var(--xd-green);
+  --link-fg: #7fd1a0;
+  --link-hover-color: #a6e3c0;
+  --link-selected-fg: #a6e3c0;
+  --selected-row: #10281c;
+  --message-success-bg: #10401f;
+  --button-bg: #1d7f4a;
+  --button-hover-bg: #27955a;
+  --default-button-bg: var(--xd-green);
+  --default-button-hover-bg: #1d7f4a;
+}
+
+/* --- шапка --- */
+
+#header {
+  border-bottom: 1px solid var(--xd-border);
+  padding: 10px 24px;
+}
+
+#site-name a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.admin-logo {
+  display: block;
+  height: 52px;
+  width: auto;
+}
+
+.admin-brand-note {
+  color: var(--header-color);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+#user-tools {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+/* Django красит эти ссылки отдельным правилом, одной переменной --header-link-color не хватает. */
+#user-tools a,
+#user-tools a:link,
+#user-tools a:visited,
+#logout-form button {
+  color: var(--xd-green);
+  border-bottom-color: #bcd6c6;
+}
+
+#user-tools a:hover,
+#logout-form button:hover {
+  color: var(--xd-green-dark);
+}
+
+/* --- блоки и кнопки --- */
+
+.module {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.module caption,
+.inline-group h2,
+#changelist .toolbar,
+.object-tools a {
+  letter-spacing: 0.01em;
+}
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+.object-tools a {
+  border-radius: 8px;
+}
+
+.object-tools a {
+  text-transform: none;
+  font-weight: 650;
+}
+
+/* Строка действий над таблицей: родитель этого не видит, но владелец пользуется ей постоянно,
+   поэтому выделяем её, чтобы «Выдать ссылку» не терялось среди фильтров. */
+.actions,
+#changelist .actions {
+  background: #e4f0e9;
+  border: 1px solid #bcd6c6;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 8px 0;
+}
+
+.actions label,
+#changelist .actions label {
+  font-weight: 650;
+  color: var(--xd-green-dark);
+}
+
+html[data-theme="dark"] .actions {
+  background: #15301f;
+  border-color: #27553a;
+}
+
+html[data-theme="dark"] .actions label,
+html[data-theme="dark"] #changelist .actions label {
+  color: #a6e3c0;
+}
+
+#changelist .actions select {
+  border-radius: 8px;
+  padding: 5px 8px;
+}
+
+/* --- вход в админку --- */
+
+.login #header {
+  position: relative;
+  justify-content: center;
+  padding: 18px 16px;
+}
+
+/* Переключатель светлой/тёмной темы иначе встаёт вплотную к логотипу. */
+.login .theme-toggle {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+}
+
+.login #site-name a {
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login .admin-logo {
+  height: 64px;
+}
+
+.login .submit-row input {
+  width: 100%;
+}

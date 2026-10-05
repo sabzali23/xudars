@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% comment %}
+Переопределяет шапку админки Django: вместо слова «Django» — логотип XuDars и свои цвета.
+Названия в заголовке вкладки и на странице входа приходят из admin.site.* (см. config/urls.py).
+{% endcomment %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title }}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png">
+{# ?v= поднимаем при правках файла: иначе браузер отдаёт старый CSS из кеша. #}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}?v=4">
+{% endblock %}
+
+{% block branding %}
+<div id="site-name">
+  <a href="{% url 'admin:index' %}">
+    <img class="admin-logo" src="{% static 'img/logo-full.png' %}?v=6" alt="{{ site_title }}">
+    <span class="admin-brand-note">панель управления</span>
+  </a>
+</div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

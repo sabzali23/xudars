@@ -12,6 +12,7 @@
     {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
     {% include "includes/form_fields.html" %}
     <button type="submit" class="button">Войти</button>
+    <p class="form-note"><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
   </form>
   <p class="auth-switch">Впервые здесь? <a href="{% url 'signup' %}">Зарегистрироваться</a></p>
 </div>
